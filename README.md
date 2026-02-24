@@ -9,13 +9,13 @@ Sandbox profiles for Pi with:
 ## Install
 
 ```bash
-pi install /Users/alex/workspace/aidev/pi-sandbox-profile
+pi install /path/to/pi-sandbox-profile
 ```
 
 Or from Git once published:
 
 ```bash
-pi install git:github.com/lajarre/pi-sandbox-profile
+pi install git:github.com/<owner>/pi-sandbox-profile
 ```
 
 ## Quick start
