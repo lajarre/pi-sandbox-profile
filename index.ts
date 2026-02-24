@@ -402,8 +402,17 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 
-			// Already active: info message
+			// Already active: info message. Special-case fail-closed guard recovery.
 			if (name === activeProfile) {
+				if (name === "open" && sandboxRequired && !sandboxInitialized) {
+					const reset = await applyProfile("open", ctx);
+					if (reset.ok) {
+						ctx.ui.notify("Cleared fail-closed guard; running open profile.", "warning");
+					} else {
+						ctx.ui.notify(`Failed to clear fail-closed guard: ${reset.reason}`, "error");
+					}
+					return;
+				}
 				ctx.ui.notify(`Profile "${name}" is already active.`, "info");
 				return;
 			}
