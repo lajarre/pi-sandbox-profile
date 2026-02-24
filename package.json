@@ -1,0 +1,36 @@
+{
+  "name": "pi-extension-sandbox-profile",
+  "version": "1.0.0",
+  "description": "Sandbox profiles for Pi: open/intro-sec/engineering with file-tool enforcement and telemetry",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "sandbox",
+    "security"
+  ],
+  "license": "MIT",
+  "files": [
+    "index.ts",
+    "helpers.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "tsx --test helpers.test.ts",
+    "clean": "echo 'nothing to clean'",
+    "build": "echo 'nothing to build'",
+    "check": "echo 'nothing to check'"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*"
+  },
+  "dependencies": {
+    "@anthropic-ai/sandbox-runtime": "^0.0.26"
+  }
+}
