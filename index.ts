@@ -44,6 +44,7 @@ function createSandboxedBashOps(currentProfile: () => string): BashOperations {
 
 				let timedOut = false;
 				let timeoutHandle: NodeJS.Timeout | undefined;
+				let loggedNetworkDeny = false;
 
 				if (timeout !== undefined && timeout > 0) {
 					timeoutHandle = setTimeout(() => {
@@ -61,8 +62,10 @@ function createSandboxedBashOps(currentProfile: () => string): BashOperations {
 				child.stdout?.on("data", onData);
 				child.stderr?.on("data", (chunk) => {
 					onData(chunk);
+					if (loggedNetworkDeny) return;
 					const text = chunk.toString();
 					if (text.includes("deny") || text.includes("sandbox") || text.includes("not allowed")) {
+						loggedNetworkDeny = true;
 						logNetworkDeny({
 							type: "blocked",
 							profile: currentProfile(),
@@ -311,8 +314,9 @@ export default function (pi: ExtensionAPI) {
 			}
 		} else {
 			ctx.ui.notify(`Sandbox profile "${profileName}" failed: ${result.reason}`, "error");
-			if (failClosed) {
-				ctx.ui.notify("Fail-closed active: unsandboxed bash execution is blocked.", "warning");
+			if (failClosed && profileName !== "open") {
+				sandboxRequired = true;
+				ctx.ui.notify("Fail-closed active: unsandboxed bash execution is blocked until a restrictive profile is applied successfully.", "warning");
 			}
 			const status = formatStatusline("open", null);
 			ctx.ui.setStatus("sandbox", ctx.ui.theme.fg(status.style, status.text));
