@@ -10,6 +10,10 @@
     "security"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lajarre/pi-sandbox-profile.git"
+  },
   "files": [
     "index.ts",
     "helpers.ts",
