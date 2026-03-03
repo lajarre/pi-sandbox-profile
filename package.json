@@ -1,5 +1,5 @@
 {
-  "name": "pi-extension-sandbox-profile",
+  "name": "pi-sandbox-profile",
   "version": "1.0.0",
   "description": "Sandbox profiles for Pi: open/intro-sec/engineering with file-tool enforcement and telemetry",
   "type": "module",
